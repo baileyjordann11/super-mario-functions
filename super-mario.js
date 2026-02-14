@@ -1,6 +1,7 @@
 // Player position
 let x = 100;
 let y = 300;
+let speed = 5;
 
 // Jump state
 let jumping = false;
@@ -19,6 +20,8 @@ function draw() {
   updateJump();
 
   drawPlayer();
+  drawCourse();
+  updateMovement();
 }
 
 // ==================================================
@@ -31,12 +34,37 @@ function jump() {
   }
 }
 
+function updateMovement () {
+  if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
+    x -= speed;
+  }
+  if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
+    x += speed;
+  }
+  
+  // Keep player on screen 
+  x = constrain(x, 0, width - 40);
+} 
 function keyPressed() {
-  if (key === " ") jump();
+  if (key === "a" || key === "ArrowUp" || key === "w") {
+    if(!jumping) {
+      jumping = true;
+      jumpFrame = 0;
+    }
+  }
+  
 
 }
 
 
+
+function moveRight(){
+  x = x+5;
+}
+
+function moveLeft () { 
+x = x-5;
+}
 // ==================================================
 // 🧠 JUMP LOGIC
 // ==================================================
@@ -59,6 +87,14 @@ function updateJump() {
 // 🎨 DRAW PLAYER
 // ==================================================
 function drawPlayer() {
-  fill(255, 60, 60);
-  rect(x, y, 40, 40);
+  fill(255, 212, 216);
+  circle(x, y, 40, 40);
 }
+
+function drawCourse() {
+  fill(255, 75, 60);
+  rect(296, 273, 50, 60);
+
+}
+
+
